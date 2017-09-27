@@ -2,7 +2,7 @@ import React from 'react';
 //reactJS has split into 2 libraries: react and react-dom
 //to render something to the DOM, we need react-dom library.
 import ReactDOM from 'react-dom';
-
+import SearchBar from './components/search_bar';
 const keys = require("../config/keys.js");
 const API_KEY = keys.youtubeAPIkey;
 console.log(API_KEY);
@@ -11,7 +11,11 @@ console.log(API_KEY);
 //some HTML
 
 const App = () => {
-	return <div>Hi!</div>;
+	return (
+		<div>
+			<SearchBar />
+		</div>
+	);
 }
 
 
