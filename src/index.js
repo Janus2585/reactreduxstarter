@@ -3,7 +3,9 @@ import React from 'react';
 //to render something to the DOM, we need react-dom library.
 import ReactDOM from 'react-dom';
 
-
+const keys = require("../config/keys.js");
+const API_KEY = keys.youtubeAPIkey;
+console.log(API_KEY);
 
 //Create a new component. This component should produce
 //some HTML
