@@ -8,7 +8,7 @@ import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
 import Header from './components/header';
-const keys = require("../config/keys.js");
+const keys = require("../config/dev.js");
 const API_KEY = keys.youtubeAPIkey;
 
 
