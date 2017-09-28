@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 //reactJS has split into 2 libraries: react and react-dom
 //to render something to the DOM, we need react-dom library.
+import _ from 'lodash';
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
-
+import Header from './components/header';
 const keys = require("../config/keys.js");
 const API_KEY = keys.youtubeAPIkey;
 
@@ -26,7 +27,7 @@ class App extends Component {
 
 		//we want the YTSearch data to be stored in the state of App
 		//videoSearch() is called in the constructor because we want the user to see videos immediately
-		this.videoSearch('surfboards');
+		this.videoSearch('');
 	}
 
 	videoSearch(term) {
@@ -40,9 +41,15 @@ class App extends Component {
 	}
 
 	render() {
+
+		//we want to throttle how many times onSearchTermChange is called 
+		//pass SearchBar a debounced version of the function
+		//can only be called every 300ms
+		const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 300)
 		return (
 			<div>
-				<SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
+				<Header />
+				<SearchBar onSearchTermChange={videoSearch} />
 				<VideoDetail video={this.state.selectedVideo} />
 				<VideoList 
 					onVideoSelect={selectedVideo => this.setState({selectedVideo})}
