@@ -4,7 +4,10 @@ const VideoList = (props) => {
 	
 	//iterate through the array of items and return a VideoListItem component for each video
 	const videoItems = props.videos.map((video) => {
-		return <VideoListItem video={video} />
+		return <VideoListItem 
+			onVideoSelect={props.onVideoSelect}
+			key={video.etag} 
+			video={video} />
 	})
 	
 	return (

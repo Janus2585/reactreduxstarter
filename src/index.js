@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
+import VideoDetail from './components/video_detail';
 
 const keys = require("../config/keys.js");
 const API_KEY = keys.youtubeAPIkey;
@@ -17,13 +18,23 @@ class App extends Component {
 		super(props);
 
 		//set default state
-		this.state = { videos: [] };
+		this.state = { 
+			videos: [],
+			selectedVideo: null 
+		};
 
 
 		//we want the YTSearch data to be stored in the state of App
-		//YTSearch is in the constructor because we want the user to see videos immediately
-		YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
-			this.setState({ videos });
+		//videoSearch() is called in the constructor because we want the user to see videos immediately
+		this.videoSearch('surfboards');
+	}
+
+	videoSearch(term) {
+		YTSearch({key: API_KEY, term: term}, (videos) => {
+			this.setState({ 
+				videos, //same as videos: videos
+				selectedVideo: videos[0]
+			});
 
 		});
 	}
@@ -31,8 +42,11 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<SearchBar />
-				<VideoList videos={this.state.videos} />
+				<SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
+				<VideoDetail video={this.state.selectedVideo} />
+				<VideoList 
+					onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+					videos={this.state.videos} />
 			</div>
 		);
 	}
